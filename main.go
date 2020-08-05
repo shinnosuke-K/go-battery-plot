@@ -42,6 +42,7 @@ func main() {
 
 	p.Title.Text = "Current Capacity"
 	p.Y.Label.Text = "Capacity"
+	p.Y.Max = 4500
 
 	err = plotutil.AddLinePoints(p, pts)
 	if err != nil {
@@ -51,5 +52,4 @@ func main() {
 	if err := p.Save(4*vg.Inch, 4*vg.Inch, "points.png"); err != nil {
 		panic(err)
 	}
-
 }
