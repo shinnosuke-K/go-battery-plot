@@ -12,6 +12,23 @@ import (
 	"gonum.org/v1/plot/vg"
 )
 
+type Data struct {
+	d [][]string
+}
+
+func (d Data) createPoint(n int) *plotter.XYs {
+	var err error
+	pts := make(plotter.XYs, len(d.d))
+	for x, y := range d.d {
+		pts[x].X = float64(x)
+		pts[x].Y, err = strconv.ParseFloat(y[n], 64)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	return &pts
+}
+
 func main() {
 	file, err := os.Open("./data.csv")
 	if err != nil {
@@ -20,7 +37,9 @@ func main() {
 
 	csvFile := csv.NewReader(file)
 
-	data, err := csvFile.ReadAll()
+	var csvData Data
+
+	csvData.d, err = csvFile.ReadAll()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,21 +49,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	pts := make(plotter.XYs, len(data))
-
-	for x, y := range data {
-		pts[x].X = float64(x)
-		pts[x].Y, err = strconv.ParseFloat(y[0], 64)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
 	p.Title.Text = "Current Capacity"
 	p.Y.Label.Text = "Capacity"
 	p.Y.Max = 4500
 
-	err = plotutil.AddLinePoints(p, pts)
+	err = plotutil.AddLinePoints(p, "Current", csvData.createPoint(0))
 	if err != nil {
 		log.Fatal(err)
 	}
