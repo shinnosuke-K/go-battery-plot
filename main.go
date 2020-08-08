@@ -62,7 +62,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := p.Save(4*vg.Inch, 4*vg.Inch, "points.png"); err != nil {
+	if err := p.Save(10*vg.Inch, 10*vg.Inch, "points.png"); err != nil {
 		panic(err)
 	}
 }
