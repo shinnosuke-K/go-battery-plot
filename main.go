@@ -53,7 +53,11 @@ func main() {
 	p.Y.Label.Text = "Capacity"
 	p.Y.Max = 4500
 
-	err = plotutil.AddLinePoints(p, "Current", csvData.createPoint(0))
+	err = plotutil.AddLinePoints(p,
+		"Current", csvData.createPoint(0),
+		"Max", csvData.createPoint(1),
+		"Design", csvData.createPoint(2),
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
