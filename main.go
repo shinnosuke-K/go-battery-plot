@@ -38,7 +38,6 @@ func main() {
 	csvFile := csv.NewReader(file)
 
 	var csvData Data
-
 	csvData.d, err = csvFile.ReadAll()
 	if err != nil {
 		log.Fatal(err)
